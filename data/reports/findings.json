@@ -2,7 +2,7 @@
   {
     "evidence": {
       "event_type": "docker_activity",
-      "raw_preview": "2026-05-17T10:10:45Z app: outbound request header Authorization: Bearer demo-token-value-12345",
+      "raw_preview": "2026-05-17T10:10:45Z app: outbound request header demo credential placeholder",
       "source": "docker"
     },
     "kind": "secret.exposure",

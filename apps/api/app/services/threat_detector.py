@@ -9,6 +9,7 @@ from collections import Counter, defaultdict
 SECRET_PATTERNS = (
     re.compile(r"AKIA[0-9A-Z]{16}"),
     re.compile(r"-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----"),
+    re.compile(r"demo credential placeholder", re.IGNORECASE),
     re.compile(r"Authorization:\s*Bearer\s+[A-Za-z0-9._-]{12,}", re.IGNORECASE),
 )
 SUSPICIOUS_PATH_MARKERS = (
