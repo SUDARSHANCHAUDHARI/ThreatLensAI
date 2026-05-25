@@ -34,7 +34,7 @@ ThreatLens identified 7 finding(s): 1 critical, 1 high, 5 medium. Key themes: au
 
 - Severity: `critical`
 - Type: `secret.exposure`
-- Evidence: `source=docker, event_type=docker_activity, raw_preview=2026-05-17T10:10:45Z app: outbound request header Authorization: Bearer demo-token-value-12345`
+- Evidence: `source=docker, event_type=docker_activity, raw_preview=2026-05-17T10:10:45Z app: outbound request header demo credential placeholder`
 - Recommended next step: Rotate the exposed credential, redact affected logs, and review downstream access.
 
 ### 2. Repeated SSH login failures indicate a brute-force attempt.
@@ -78,4 +78,3 @@ ThreatLens identified 7 finding(s): 1 critical, 1 high, 5 medium. Key themes: au
 - Type: `ip.multi_signal`
 - Evidence: `ip=203.0.113.10, event_types=['http_request', 'ssh_successful_login']`
 - Recommended next step: Correlate this IP across auth, web, and infrastructure logs before closing the incident.
-

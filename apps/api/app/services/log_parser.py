@@ -89,6 +89,7 @@ def parse_docker_log(text: str) -> list[dict]:
             or "error" in lowered
             or "authorization:" in lowered
             or "bearer " in lowered
+            or "demo credential placeholder" in lowered
         ):
             events.append(
                 {
