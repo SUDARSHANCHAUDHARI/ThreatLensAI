@@ -1,104 +1,123 @@
 # ThreatLens AI
 
-[![Python](https://img.shields.io/badge/Python-3.12-blue)](#) [![Status](https://img.shields.io/badge/status-MVP-green)](#) [![Security](https://img.shields.io/badge/security-defensive%20lab-purple)](#)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](#requirements)
+[![Status](https://img.shields.io/badge/status-MVP-green)](#status)
+[![Security](https://img.shields.io/badge/security-defensive%20lab-purple)](#safe-use)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-AI-powered log investigation assistant for auth, nginx, Docker logs, suspicious IPs, secrets, and incident reports.
+AI-style log investigation assistant. Parses Linux auth logs, nginx access logs, and Docker container logs, then highlights suspicious IPs, exposed secrets, and produces a structured incident summary.
 
-- **Portfolio group:** Product-style SaaS project
-- **Status:** MVP implemented, tested, committed, and pushed to GitHub
-- **GitHub:** https://github.com/SUDARSHANCHAUDHARI/ThreatLensAI
-- **Local path:** `/Users/screencloudsudarshan/SUDARSHAN_CODE/sudarshan_repos/CyberSecurity/ThreatLensAI`
+---
 
-## MVP Snapshot
+## Overview
 
-This repository includes a working MVP with safe sample data, deterministic detection or analysis logic, local tests, and generated output reports where relevant. It is ready for README/demo polish or deeper product work.
+ThreatLens AI is a defensive analysis tool that ingests common log formats and produces an investigation-style report. It parses Linux `auth.log`, nginx access logs, and Docker container logs, correlates suspicious IPs, flags accidentally logged secrets, and assembles a Markdown incident report ready for analyst review.
 
-## Safe Use
+The current MVP is a Python CLI. A FastAPI + React web dashboard is scaffolded under `apps/` for future development.
 
-This project is defensive and analysis-focused. Use only with logs, systems, repositories, and lab environments you own or have permission to assess.
+## Features
 
-## Core Features
+- Parses Linux auth logs, nginx access logs, and Docker container logs
+- Identifies suspicious source IPs across log types
+- Flags exposed secrets accidentally logged
+- Correlates events into incidents
+- Generates AI-style incident summary explanations
+- Outputs JSON findings, incident summary, Markdown report, and triage handoff
 
-- log upload
-- auth/nginx/docker parser
-- suspicious IP detection
-- brute-force detection
-- exposed secret detection
-- AI summary
-- incident report export
+## Requirements
 
-## Suggested Stack
+- Python 3.10 or newer
+- Linux, macOS, or Windows
+- No third-party Python packages (standard library only)
+- Optional: Docker for the demo container
 
-FastAPI, React, PostgreSQL, OpenAI/Claude, Docker.
-
-## Status
-
-Working CLI MVP.
-
-
-## Install
+## Installation
 
 ```bash
+git clone https://github.com/SUDARSHANCHAUDHARI/ThreatLensAI.git
+cd ThreatLensAI
 pip install .
 ```
 
-This registers the `threat-lens` command. Or run directly:
+This registers the `threat-lens` CLI command.
+
+To run without installing:
 
 ```bash
 python3 main.py --help
 ```
 
-## Quick Start
+## Usage
 
-Analyze the included safe sample logs:
+Analyze the included sample log bundle:
 
 ```bash
-python3 -m apps.api.app.cli analyze \
-  data/samples/auth.log \
-  data/samples/nginx-access.log \
-  data/samples/docker.log \
-  --events data/reports/events.json \
-  --findings data/reports/findings.json \
-  --ip-risk data/reports/ip-risk.json \
-  --report data/reports/incident-report.md \
-  --triage-report data/reports/triage-report.md
+python3 main.py analyze --fixture data/samples/log-bundle.json --out-dir data/reports
 ```
 
-Run tests:
+Generated outputs in `data/reports/`:
+
+- `events.json` — parsed log events
+- `findings.json` — flagged suspicious activity and secrets
+- `incident.json` — correlated incident summary
+- `summary.json` — counts and severity breakdown
+- `report.md` — Markdown incident report
+- `triage.md` — analyst triage checklist
+
+## Project Structure
+
+```
+ThreatLensAI/
+├── apps/
+│   ├── api/        FastAPI app scaffold (planned)
+│   └── web/        React/Next.js dashboard scaffold (planned)
+├── data/
+│   ├── samples/    Safe sample log bundles
+│   └── reports/    Example generated output
+├── docker/         Dockerfile + compose support
+├── docs/           Architecture, security notes, demo
+├── scripts/        Setup, seed, run helpers
+├── tests/          Unit and integration tests
+├── main.py         CLI entrypoint
+├── pyproject.toml  Package metadata
+└── LICENSE
+```
+
+## Testing
 
 ```bash
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
-## MVP Capabilities
-
-- Parses Linux auth logs, nginx access logs, and Docker daemon/app logs.
-- Detects repeated SSH failed-login brute-force behavior.
-- Flags suspicious web paths and scanner user agents.
-- Detects credential-like material in logs.
-- Correlates IPs across multiple event types.
-- Builds a deterministic summary through a provider boundary.
-- Generates JSON events, findings, IP risk tables, an incident report, and a triage report.
-
-## Demo Artifacts
-
-- [Architecture](docs/ARCHITECTURE.md)
-- [Security notes](docs/SECURITY_NOTES.md)
-- [Demo walkthrough](docs/DEMO.md)
-- [Release notes](docs/RELEASE_NOTES.md)
-- [Sample incident report](data/reports/incident-report.md)
-- [Sample triage report](data/reports/triage-report.md)
-
 ## Docker Demo
 
 ```bash
-docker compose run --rm threatlens-demo
+docker compose run --rm api
 ```
+
+## Safe Use
+
+This project is defensive and analysis-focused. Use only with logs and lab environments you own or have explicit written permission to assess. The included sample logs are synthetic and safe for public demo use.
+
+## Status
+
+Working Python CLI MVP. Web dashboard scaffold present but not yet implemented.
 
 ## Roadmap
 
-- Add redaction pipeline before external AI providers
-- Add parser confidence and parse-error reporting
-- Add more log fixtures for MFA, container privilege drift, and web bursts
-- Add FastAPI upload endpoint and React dashboard
-- Prepare GitHub release `v0.1.0-mvp`
+- Real LLM integration for incident summarization
+- Additional log format support (Kubernetes, syslog, cloud audit logs)
+- Live log streaming mode
+- Web dashboard with incident timeline visualization
+- GitHub release `v0.1.0-mvp`
+
+## License
+
+Released under the [MIT License](LICENSE). You are free to use, modify, and distribute this software with attribution.
+
+## Author
+
+**Sudarshan Chaudhari** — [SudarshanTechLabs](https://github.com/SUDARSHANCHAUDHARI)
+Bangkok, Thailand
+
+For inquiries: open an issue on [GitHub](https://github.com/SUDARSHANCHAUDHARI/ThreatLensAI/issues).
