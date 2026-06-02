@@ -35,6 +35,19 @@ FastAPI, React, PostgreSQL, OpenAI/Claude, Docker.
 
 Working CLI MVP.
 
+
+## Install
+
+```bash
+pip install .
+```
+
+This registers the `threat-lens` command. Or run directly:
+
+```bash
+python3 main.py --help
+```
+
 ## Quick Start
 
 Analyze the included safe sample logs:
